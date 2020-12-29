@@ -10,7 +10,7 @@ class Direction(Enum):
 # Initialize the module
 pygame.init()
 
-# Variables for the colors
+# Some useful colors
 color_black = 0, 0, 0
 color_green = 0, 255, 0
 
@@ -20,16 +20,17 @@ game_over = False
 
 # Variables for the snake
 bodyParts = 1
-x_snake = [150]
-y_snake = [150]
+x_snake = 300
+y_snake = 300
 direction = Direction.RIGHT
+x_change = 0
+y_change = 0
 
 # Generate the screen
 display = pygame.display.set_mode(display_size)
 
-# Variables for the change in direction
-x_change = 0
-y_change = 0
+# Timer
+clock = pygame.time.Clock()
 
 while not game_over:
     for event in pygame.event.get():
@@ -65,12 +66,21 @@ while not game_over:
         x_snake[i] = x_snake[i-1]
         y_snake[i] = y_snake[i-1]
 
+    # Update the position of the snake
+    x_snake += x_change
+    y_snake += y_change
+
+    # Clear the screen
+    display.fill(color_black) 
+
     # Draw the snake
-    for i in range(bodyParts):
-        x = x_snake[i]
-        y = y_snake[i]
-        pygame.draw.rect(display, color_green, [x, y, 25, 25])
+    pygame.draw.rect(display, color_green, [x_snake, y_snake, 20, 20])
+
+    # Update the screen
     pygame.display.update()
+
+    # Update timer
+    clock.tick(30)
 
 # After we exit the game
 pygame.quit()
