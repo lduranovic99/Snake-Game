@@ -20,8 +20,13 @@ let xSnake = [Math.round(gameBoard.width / 2)];
 let ySnake = [Math.round(gameBoard.height / 2)];
 let direction = "R";
 let bodyParts = 1;
-let xChange = 10;
+let xChange = 20;
 let yChange = 0;
+
+// Variables for the apple
+let xApple = (getRandomInt(gameBoard.width / unitSize)) * unitSize;
+let yApple = (getRandomInt(gameBoard.height / unitSize)) * unitSize;
+let applesEaten = 0;
 
 main();
 
@@ -31,8 +36,10 @@ function main() {
             return;
         moveSnake();
         checkCollision();
+        checkApple();
         clearScreen();
         drawSnake();
+        drawApple();
         // We can call main() again
         main();
     }, 100);
@@ -65,8 +72,15 @@ function moveSnake() {
 function checkCollision() {
     let xHead = xSnake[0];
     let yHead = ySnake[0];
+    // Check the borders
     if (xHead < 0 || xHead > gameBoard.width - unitSize || yHead < 0 || yHead > gameBoard.width - unitSize) {
         gameOver = true;
+    }
+    // Check the rest of the snake
+    for (let i = 1; i < bodyParts; i++) {
+        if (xHead == xSnake[i] && yHead == ySnake[i]) {
+            gameOver = true;
+        }
     }
 }
 
@@ -79,25 +93,50 @@ function changeDirection() {
     
     if (keyPressed == LEFT_KEY && direction !== "R") {
         direction = "L";
-        xChange = -10;
+        xChange = -20;
         yChange = 0;
     }
 
     if (keyPressed == RIGHT_KEY && direction !== "L") {
         direction = "R";
-        xChange = 10;
+        xChange = 20;
         yChange = 0;
     }
 
     if (keyPressed == UP_KEY && direction !== "D") {
         direction = "U";
         xChange = 0;
-        yChange = -10;
+        yChange = -20;
     }
 
     if (keyPressed == DOWN_KEY && direction !== "U") {
         direction = "D";
         xChange = 0;
-        yChange = 10;
+        yChange = 20;
     }
+}
+
+function getRandomInt(range) {
+    let rangeInt = Math.floor(range);
+    return Math.floor(Math.random() * rangeInt);
+}
+
+function newApple() {
+    xApple = (getRandomInt(gameBoard.width / unitSize)) * unitSize;
+    yApple = (getRandomInt(gameBoard.height / unitSize)) * unitSize;
+}
+
+function checkApple() {
+    let xHead = xSnake[0];
+    let yHead = ySnake[0];
+    if (xHead == xApple && yHead == yApple) {
+        newApple();
+        applesEaten += 1;
+        bodyParts += 1;
+    }
+}
+
+function drawApple() {
+    gameBoardCtx.fillStyle = colorRed;
+    gameBoardCtx.fillRect(xApple, yApple, unitSize, unitSize);
 }
