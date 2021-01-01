@@ -1,14 +1,13 @@
 ## Snake Game in Different Languages
 
 This repository will contain different implementations of the snake game.
-With the semester being over, I have too much time on my hands and I
-thought it would be nice to compare some basic GUI funcionalities between
-different languages.
+I thought it would be nice to compare some basic GUI functionalities between
+a few very common languages. At the same time, this will serve as a nice
+refresher for me when it comes to GUI programming in general.
 
-So far, the repo contains code for Java and Python. In the future, I will be
-adding a JS implementation (that will come very soon as it should be quite
-easy) and an implementation with a functional language (still haven't decided
-which one to use but will probably opt for Haskell).
+So far, the repo contains Java, Python and JS versions. In the future, I will
+be adding a functional programming implementation as well, probably written in
+Haskell.
 
 The structure of the repository is fairly straightforward. There should be
 one folder per language implementation.
