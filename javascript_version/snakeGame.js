@@ -2,7 +2,7 @@
 const gameBoard = document.getElementById("gameCanvas");
 const gameBoardCtx = gameBoard.getContext("2d");
 
-// Add a key listener - or whatever that thing is called anyway
+// Add a key listener
 document.addEventListener("keydown", changeDirection);
 
 // Some color variables
@@ -40,13 +40,12 @@ function main() {
         clearScreen();
         drawSnake();
         drawApple();
-        // We can call main() again
         main();
     }, 100);
 }
 
 function clearScreen() {
-    // This is setting the color of the rectangle
+    // This is setting up the color of the rectangle
     gameBoardCtx.fillStyle = colorBlack;
     // Draw a rectangle across the whole screen
     gameBoardCtx.fillRect(0, 0, gameBoard.width, gameBoard.height);
@@ -132,6 +131,7 @@ function checkApple() {
     if (xHead == xApple && yHead == yApple) {
         newApple();
         applesEaten += 1;
+        document.getElementById('score').innerHTML = applesEaten;
         bodyParts += 1;
     }
 }
